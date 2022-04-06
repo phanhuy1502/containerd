@@ -473,7 +473,13 @@ func (s *service) Shutdown(ctx context.Context, r *taskAPI.ShutdownRequest) (*pt
 	return empty, nil
 }
 
+func WaitForever() {
+	<-make(chan int)
+}
+
 func (s *service) Stats(ctx context.Context, r *taskAPI.StatsRequest) (*taskAPI.StatsResponse, error) {
+	WaitForever()
+
 	container, err := s.getContainer(r.ID)
 	if err != nil {
 		return nil, err
